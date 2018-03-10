@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
-import axios from 'axios'
+import {connect} from 'react-redux'
 import './App.css'
+import {SAY_HELLO} from "./redux/actions";
 
 class App extends Component {
     constructor () {
@@ -9,8 +10,9 @@ class App extends Component {
     }
 
     handleClick () {
-        axios.get("http://localhost:8080/hello")
-            .then(response => console.log(response))
+        this.props.sayHello();
+        // axios.get("http://localhost:8080/hello")
+        //     .then(response => console.log(response))
     }
 
     render() {
@@ -24,4 +26,11 @@ class App extends Component {
     }
 }
 
-export default App
+export const mapDispatchToProps = (dispatch) => {
+  return {
+      sayHello() {
+          dispatch({type: SAY_HELLO});
+      }
+  }
+};
+export default connect(null,mapDispatchToProps) (App)
